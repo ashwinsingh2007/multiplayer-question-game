@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ -d "./node_modules" ]; then
   echo "Skipping 'npm install' because 'node_modules' already exists. Delete 'node_modules' and restart the container if you want to reinstall binaries."
 

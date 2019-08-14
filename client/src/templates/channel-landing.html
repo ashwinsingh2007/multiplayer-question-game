@@ -1,5 +1,9 @@
 <div>
     <div style="margin-top: 40px;">
+    <h4 v-if="send === null" style="text-align: center;
+    padding: 20px;"> You will receive messages when someone joins the channel and starting asking questions</h4>
+    <h4 v-if="send !== null" style="text-align: center;
+    padding: 20px;"> You are given 20 chances. Either you spend in asking questions or answer the question. You can ask one question at a time</h4>
     <div class="attempted" v-if="send !== null"> <b>Attempt Left</b> :  {{attemptLeft}}</div>
     <v-card
         max-width="700"
