@@ -18,7 +18,7 @@
                 
                 </div>
                 </div>
-                <div data-v-2ff3dfc4="" class="v-alert info" v-if="send !== null && sendAnswer === 'limit'">
+                <div data-v-2ff3dfc4="" class="v-alert info" v-if="send !== null && (sendAnswer === 'limit' || attemptLeft === 0)">
                     <i aria-hidden="true" class="v-icon material-icons theme--light v-alert__icon">info</i>
                     <div>
                 You have finished limit of 20 questions/answers.
@@ -53,7 +53,7 @@
         </v-card-text>
             </div>
             </div>
-        <div  v-if="send !== null && sendAnswer == null" >
+        <div  v-if="send !== null && sendAnswer == null && attemptLeft !== 0" >
             <div class="message-container">
                 
                 <input type="text" placeholder="Type your question" v-model="message" class="form-control">

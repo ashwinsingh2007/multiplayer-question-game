@@ -9,6 +9,8 @@
 .card-games {
   display: inline-block;
   margin: 7px;
+  box-shadow: #bdbdbd;
+  border: 1px solid #bdbdbd;
 }
 
 .inbox {

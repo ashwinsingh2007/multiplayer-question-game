@@ -28,6 +28,7 @@ module.exports = {
         messageId: msg.id,
         receiver: msg.username,
         send: msg.username + msg.channelUsersId,
+        token: msg.username + msg.channelUsersId,
         replied: msg.replied,
         originalMessage: msg.message,
         message: msg.message
@@ -40,7 +41,8 @@ module.exports = {
     });
     if (channelUser && channelUser[0] && channelUser[0].id) {
       result.id = channelUser[0].id;
-      result.answerStatus = channelUser[0].correct;
+      console.log('00000', channelUser[0].tries)
+      // result.answerStatus = channelUser[0].correct;
       if (channelUser[0].tries >= 20) {
         result.answerStatus = "limit";
       }
@@ -67,7 +69,7 @@ module.exports = {
     result.channelUserId = result.id;
     result.channelsId = channelsId;
     result.messages = [];
-    result.attemptLeft = 20 - messages.length;
+    result.attemptLeft = 20 - result.tries;
     messages.forEach(element => {
       result.messages.push(element);
       if (element.replied) {

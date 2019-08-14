@@ -34,6 +34,7 @@ io.on("connection", socket => {
   socket.on("MESSAGE", async data => {
     let answerStatus = null;
     let attemptLeft = null;
+    console.log('--data--1', data);
     if (!data.answer) {
       // this will be called for participants in the game
       const result = await channelUsersController.update({
@@ -62,6 +63,7 @@ io.on("connection", socket => {
     data.answerStatus = answerStatus;
     data.attemptLeft = attemptLeft;
     data.messageId = msgid;
+    console.log('--data--2', data);
     io.emit(data.send, data);
   });
 });
