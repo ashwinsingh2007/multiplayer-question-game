@@ -1,0 +1,88 @@
+.v-progress-circular {
+  margin: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-games {
+  display: inline-block;
+  margin: 7px;
+}
+
+.inbox {
+  max-height: 350px;
+  overflow: auto;
+  padding: 10px;
+  background: #fafafa;
+}
+
+.card-style {
+  padding: 10px;
+}
+
+.inbox-header {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.username-text {
+  font-size: 17px;
+  font-weight: 500;
+  color: #9e9e9e;
+  text-transform: uppercase;
+}
+
+.message-text-container {
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #ff6839;
+  border-bottom: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  border-left: 2px solid #89c6fd;
+}
+
+.message-text {
+  margin: auto 0px;
+}
+
+.button-decide-container {
+  display: flex;
+}
+
+.message-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+input {
+  border: 1px solid #ccc !important;
+  padding: 8px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+p {
+  margin: 0px;
+}
+
+.v-card__text {
+  padding: 15px;
+}
+
+.inner-cont {
+  display: flex;
+  justify-content: inherit;
+}
+
+.attempted {
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
+  color: #fe7b5d;
+}

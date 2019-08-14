@@ -1,0 +1,18 @@
+.v-progress-circular {
+  margin: 1rem;
+}
+
+.text-center {
+  text-align: center;
+  margin-top: 25px;
+}
+.card-games {
+  display: inline-block;
+  margin: 7px;
+}
+
+button {
+  box-shadow: none !important;
+  border: 1px solid #616161;
+  margin-top: 10px;
+}

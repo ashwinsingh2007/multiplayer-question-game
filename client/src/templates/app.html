@@ -1,0 +1,120 @@
+<div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <router-link
+        to='/'
+        tag='span'
+        style='cursor: pointer'>
+        20 Game Questions
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        flat
+        @click="openModal"
+      >
+       <span class="mr-2">Create Game Channel</span>
+      </v-btn>
+      
+      
+        <v-btn
+          flat
+          @click="logout"
+           v-if="token"
+        >
+        <span class="mr-2">Logout</span>
+        </v-btn>
+
+        <v-btn
+          flat
+          @click="openRegister"
+          v-else
+        >
+        <span class="mr-2">Register/Login</span>
+        </v-btn>
+      
+    </v-toolbar>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+
+    <template>
+      <v-layout justify-center>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">Create Game Channel</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-layout column>
+                  <v-text-field
+                        v-model="name"
+                        label="Channel Name"
+                        required
+                      ></v-text-field>
+
+                      <v-text-field
+                        v-model="word"
+                        label="Word"
+                        required
+                      ></v-text-field>
+                  </v-layout>
+                </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="createGameChannel">Create</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="registerModal" persistent max-width="600px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">Register/Login</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-layout column>
+                  <v-text-field
+                        v-model="username"
+                        label="Unique Username"
+                        required
+                      ></v-text-field>
+
+                      <v-text-field
+                        v-model="password"
+                        label="Password"
+                        required
+                      ></v-text-field>
+                  </v-layout>
+                </v-container>
+              <!-- <small>*indicates required field</small> -->
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="registerModal = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="register">Register</v-btn>
+              <v-btn color="blue darken-1" text @click="login">Login</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+      <v-snackbar
+        v-model="alert"
+      >
+        {{ alertText }}
+        <v-btn
+          color="red"
+          text
+          @click="alert = false"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>  
+    </template>
+
+  </v-app>
+</div>

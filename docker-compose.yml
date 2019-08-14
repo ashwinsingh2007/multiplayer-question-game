@@ -1,0 +1,32 @@
+
+client:
+  build: ./client
+  ports:
+    - 8080:8080
+  volumes:
+    - ./client:/data
+  environment:
+    - API_URL=http://localhost:8081/
+  links:
+    - "db"
+
+server:
+  build: ./server
+  ports:
+    - 9000:9000
+  volumes:
+    - ./server:/data
+  environment:
+    - DATABASE_URL=server-database:27017
+  links:
+    - "db"
+
+db:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=prod7
+  ports:
+    - "5432:5432"
+
+

@@ -1,0 +1,85 @@
+<div>
+    <div style="margin-top: 40px;">
+    <div class="attempted" v-if="send !== null"> <b>Attempt Left</b> :  {{attemptLeft}}</div>
+    <v-card
+        max-width="700"
+        class="mx-auto card-style"
+
+    >
+        <v-card-title class="inbox-header">
+        <div> Inbox </div>
+        
+        </v-card-title>
+            <div>
+                <div data-v-2ff3dfc4="" class="v-alert success" v-if="send !== null && sendAnswer === true">
+                    <i aria-hidden="true" class="v-icon material-icons theme--light v-alert__icon">check_circle</i>
+                    <div>
+                        You have Answered correctly.
+                
+                </div>
+                </div>
+                <div data-v-2ff3dfc4="" class="v-alert info" v-if="send !== null && sendAnswer === 'limit'">
+                    <i aria-hidden="true" class="v-icon material-icons theme--light v-alert__icon">info</i>
+                    <div>
+                You have finished limit of 20 questions/answers.
+                </div>
+                </div>
+                <div data-v-2ff3dfc4="" class="v-alert error" v-if="send !== null && sendAnswer === false">
+                    <i aria-hidden="true" class="v-icon material-icons theme--light v-alert__icon">warning</i>
+                    <div>
+                You have attempted and answer was wrong.
+                </div>
+                </div>
+            </div>
+            <div class="inbox">
+                <div class="message-text-container">
+                    <div v-if="messages.length === 0">
+                        No messages
+                        </div>
+        <v-card-text class="message-text-container" v-for="(msg, index) in messages" :key="index">
+                <div class="inner-cont">
+    <p class="message-text"><span class="username-text">{{ msg.username }}: </span>{{ msg.message }}
+    <div class="button-decide-container" v-if="send === null">
+        <v-card-actions v-if="!msg.replied">
+        <v-btn @click="sendAnswerByCreator('Yes', msg)">Yes</v-btn>
+        </v-card-actions>
+
+        <v-card-actions v-if="!msg.replied">
+        <v-btn @click="sendAnswerByCreator('No', msg)">No</v-btn>
+        </v-card-actions>
+    </div>
+    </p>
+    </div>
+        </v-card-text>
+            </div>
+            </div>
+        <div  v-if="send !== null && sendAnswer == null" >
+            <div class="message-container">
+                
+                <input type="text" placeholder="Type your question" v-model="message" class="form-control">
+                <v-btn v-if="!(send !== null && block) && send !== null && sendAnswer === null" @click="sendQuestion()">Ask question</v-btn>
+                <v-btn v-if="send !== null && block" disabled>Waiting for reply</v-btn>
+            </div>
+                                
+            <div class="message-container">
+                <input type="text" placeholder="Type your guess" v-model="userAnswer" class="form-control">
+                <v-btn v-if="send !== null && sendAnswer === null" @click="sendAnswerByPlayer()">Send Answer</v-btn>
+            </div>
+    </div>    
+    </v-card>  
+
+        <v-snackbar
+            v-model="alert"
+            :multi-line="multiLine"
+        >
+            {{ alertText }}
+            <v-btn
+                color="red"
+                text
+                @click="alert = false"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>             
+    </div>
+</div>

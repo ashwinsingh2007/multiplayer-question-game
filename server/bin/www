@@ -1,0 +1,123 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require("../app");
+var debug = require("debug")("node-sequelize:server");
+var http = require("http");
+const channelUsersController = require(".././controllers").channelUsers;
+const messagesController = require(".././controllers").messages;
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort("9000");
+app.set("port", port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
+const io = require("socket.io")(server);
+io.on("connection", socket => {
+  socket.on("MESSAGE", async data => {
+    let answerStatus = null;
+    let attemptLeft = null;
+    if (!data.answer) {
+      // this will be called for participants in the game
+      const result = await channelUsersController.update({
+        objectId: data.channelUserId,
+        userAnswer: data.userAnswer
+      });
+      console.log('---result--', result);
+      answerStatus = result.answerStatus;
+      attemptLeft = result.attemptLeft;
+    }
+    data.attemptLeft = attemptLeft;
+    if (data.userAnswer || answerStatus === "limit") {
+      data.answerStatus = answerStatus;
+      data.attemptLeft = attemptLeft;
+      io.emit(data.token, { ...data, answerChecked: true });
+      return;
+    }
+    const msgid = await messagesController.createOrUpdate({
+      channelUsersId: data.channelUserId,
+      username: data.username,
+      message: data.message,
+      channelId: data.channelsId,
+      answer: data.answer,
+      messageId: data.messageId
+    });
+    data.answerStatus = answerStatus;
+    data.attemptLeft = attemptLeft;
+    data.messageId = msgid;
+    io.emit(data.send, data);
+  });
+});
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}

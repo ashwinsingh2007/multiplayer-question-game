@@ -1,0 +1,28 @@
+ <div class="text-center">
+    <v-card class="card-games" v-for="(channel, index) in channelList" :key="index" outlined :width="344">
+      <v-card-text>
+        <div class="text-center">
+          <v-img
+            class="white--text"
+            height="200px"
+            src="https://img.freepik.com/free-photo/question-marks-written-reminders-tickets_79075-2.jpg?size=626&ext=jpg"
+          >
+            <v-card-title class="align-end fill-height"><b>Channel </b> - {{channel.title}}</v-card-title>
+          </v-img>
+          <v-btn @click="navigateChannel(channel.id)" outlined>Join {{channel.title}} Channel</v-btn>
+        </div>
+      </v-card-text>
+    </v-card>
+    <v-snackbar
+      v-model="alert"
+    >
+      {{ alertText }}
+      <v-btn
+        color="red"
+        text
+        @click="alert = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>  
+  </div>
